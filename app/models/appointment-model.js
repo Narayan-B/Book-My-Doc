@@ -1,4 +1,5 @@
 const {Schema,model}=require('mongoose')
+
 const appointmentSchema=new Schema({
     patient:{
         type:Schema.Types.ObjectId,
@@ -11,5 +12,7 @@ const appointmentSchema=new Schema({
         default:'Pending'
     }
 },{timestamps:true})
+
 const Appointment=model('Appointment',appointmentSchema)
+
 module.exports=Appointment

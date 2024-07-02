@@ -39,11 +39,6 @@ const availabilityUpdateValidationSchema = {
         }
         
     },
-    languagesSpoken: {
-        exists: { errorMessage: 'Languages is required' },
-        notEmpty:{errorMessage:' Languages is required'},
-        isArray: { errorMessage: 'Languages spoken should be an array' }
-    },
     consultationFees:{
         exists: { errorMessage: 'ConsultationFees is required' },
         notEmpty:{errorMessage:' Consultaion Fees is required'},

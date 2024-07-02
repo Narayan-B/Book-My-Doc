@@ -1,4 +1,6 @@
 const {Schema,model}=require('mongoose')
+
+//schema
 const userSchema=new Schema({
     username:String,
     email:String,
@@ -12,8 +14,10 @@ const userSchema=new Schema({
     isVerified:{
         type:Boolean,
         default:false
-
     }
 },{timestamps:true})
+
+//model
 const User=model('User',userSchema)
+
 module.exports=User

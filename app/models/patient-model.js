@@ -1,4 +1,5 @@
 const {Schema, model }= require('mongoose');
+
 const patientSchema = new Schema({
     userId:{
         type:Schema.Types.ObjectId,

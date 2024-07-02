@@ -2,8 +2,8 @@ const { validationResult } = require('express-validator');
 const Patient = require('../models/patient-model');
 const patientCltr={}
 
+//create patientProfile
 patientCltr.createProfile = async (req, res) => {
-    // Check for validation errors
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
         return res.status(400).json({ errors: errors.array() });
@@ -21,6 +21,8 @@ patientCltr.createProfile = async (req, res) => {
         res.status(500).json('something went wrong')
     }
 }
+
+//get patientProfile
 patientCltr.getProfile=async(req,res)=>{
     try{
         const profile=await Patient.findOne({userId:req.user.id})
@@ -30,15 +32,15 @@ patientCltr.getProfile=async(req,res)=>{
         return res.status(500).json("Something went wrong")
     }
 }
+
+//update patientProfile
 patientCltr.updateProfile=async (req,res)=>{
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
         return res.status(400).json({ errors: errors.array() });
     }
-
     const { firstName, lastName, mobile, address, pincode } = req.body;
     const userId = req.user.id; // Assuming userId is extracted from JWT token or session
-
     try {
         // Find the patient by userId and update the fields
         let patient = await Patient.findOne({ userId });
@@ -64,10 +66,8 @@ patientCltr.updateProfile=async (req,res)=>{
                 patient.profilePic = existingPatient.profilePic;
             }
         }
-
         // Save the updated patient document
         await patient.save();
-
         res.json(patient); // Return the updated patient document
     } catch (err) {
         console.error(err.message);

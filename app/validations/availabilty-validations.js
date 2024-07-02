@@ -45,17 +45,6 @@ const availabilityValidationSchema = {
         notEmpty:{errorMessage:'Consultation time per patient should not be empty'},
         trim:true
     },
-    languagesSpoken: {
-        exists: { errorMessage: 'Languages is required' },
-        notEmpty:{errorMessage:' Languages is required'},
-        isArray: { errorMessage: 'Languages spoken should be an array' }
-    },
-    consultationFees:{
-        exists: { errorMessage: 'ConsultationFees is required' },
-        notEmpty:{errorMessage:' Consultaion Fees is required'},
-        isNumeric:{errorMessage:'fees should be in number'}
-
-    },
     // doctorId:{
     //     custom:{
     //         options:async function(value,{req}){

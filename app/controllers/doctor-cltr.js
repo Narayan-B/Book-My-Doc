@@ -4,20 +4,18 @@ const User=require('../models/user-model')
 const {sendRejectionEmail,sendVerificationSuccessEmail}=require('../../utils/sendRejectionMail')
 const doctorCtrl = {};
 
+//create doctorProfile
 doctorCtrl.createProfile = async (req, res) => {
     //console.log(req.user.id)
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
         return res.status(400).json({ errors: errors.array() });
     }
-
     const body = req.body
     try {
-        
         const doctor = new Doctor(body);
         doctor.userId = req.user.id;
         doctor.profilePic=req.file.path
-
         // Save the doctor profile
         await doctor.save();
 
@@ -28,6 +26,7 @@ doctorCtrl.createProfile = async (req, res) => {
     }
 };
 
+//get doctorProfile
 doctorCtrl.getProfile=async(req,res)=>{
     try{
         const profile=await Doctor.findOne({userId:req.user.id})
@@ -38,8 +37,7 @@ doctorCtrl.getProfile=async(req,res)=>{
     }
 }
 
-
-
+//update doctorProfile
 doctorCtrl.updateProfile = async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -74,6 +72,8 @@ doctorCtrl.updateProfile = async (req, res) => {
         res.status(500).json({ message: 'Something went wrong' });
     }
 };
+
+ //verfication of the docctor
 doctorCtrl.verifyDoctor = async (req, res) => {
     const { id } = req.params;
     const { action } = req.body; // "verify" or "reject"
@@ -110,6 +110,7 @@ doctorCtrl.verifyDoctor = async (req, res) => {
     }
   };
 
+//get single doctor
 doctorCtrl.singleDoctor=async(req,res)=>{
     const id=req.params.id
     try{
@@ -124,7 +125,5 @@ doctorCtrl.singleDoctor=async(req,res)=>{
 
     }
 }
-
-
 
 module.exports = doctorCtrl;

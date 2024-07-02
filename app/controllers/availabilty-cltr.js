@@ -1,6 +1,8 @@
 const { validationResult } = require('express-validator')
-const Availability=require('../models/availabilty-model')
+const Availability=require('../models/availabilty-model') 
 const availabilityCltr={}
+
+//create availability
 availabilityCltr.create=async(req,res)=>{
     const errors=validationResult(req)
     if(!errors.isEmpty()){
@@ -18,6 +20,8 @@ availabilityCltr.create=async(req,res)=>{
         return res.status(500).json('Internal server error')
     }
 }
+
+//update availaability
 availabilityCltr.update=async(req,res)=>{
     const errors=validationResult(req)
     if(!errors.isEmpty()){
@@ -35,8 +39,9 @@ availabilityCltr.update=async(req,res)=>{
         console.log(err)
         return res.status(500).json('Internal server error')
     }
-
 }
+
+//to get all doctors
 availabilityCltr.allDoctors=async(req,res)=>{
     
     try{
@@ -53,4 +58,5 @@ availabilityCltr.allDoctors=async(req,res)=>{
 
     }
 }
+
 module.exports=availabilityCltr

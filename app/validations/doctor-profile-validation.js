@@ -13,16 +13,19 @@ const doctorProfileValidationSchema = {
             }
         }
     },
+
     firstName: {
         exists: { errorMessage: 'First name is required' },
         notEmpty: { errorMessage: 'First name should not be empty' },
         trim: true
     },
+
     lastName: {
         exists: { errorMessage: 'Last name is required' },
         notEmpty: { errorMessage: 'Last name should not be empty' },
         trim: true
     },
+
     gender: {
         exists: { errorMessage: 'Gender is required' },
         isIn: {
@@ -30,6 +33,7 @@ const doctorProfileValidationSchema = {
             errorMessage: 'Gender must be one of "Male", "Female", "Other"'
         }
     },
+
     mobile: {
         exists: { errorMessage: 'Phone number is required' },
         notEmpty: { errorMessage: 'Phone number should not be empty' },
@@ -45,6 +49,7 @@ const doctorProfileValidationSchema = {
             }
         }
     },  
+
     profilePic: {
         custom: {
             options: (value, { req }) => {
@@ -63,26 +68,31 @@ const doctorProfileValidationSchema = {
             }
         }
     },
+
     hospitalName:{
         exists:{errorMessage:"Hospital Name is required"},
         notEmpty:{errorMessage:"Hospital Name should not be empty"},
         trim:true
     },
+
     'hospitalAddress.street': {
         exists: { errorMessage: 'Street address is required' },
         notEmpty: { errorMessage: 'Street address should not be empty' },
         trim: true
     },
+
     'hospitalAddress.city': {
         exists: { errorMessage: 'City is required' },
         notEmpty: { errorMessage: 'City should not be empty' },
         trim: true
     },
+
     'hospitalAddress.state': {
         exists: { errorMessage: 'State is required' },
         notEmpty: { errorMessage: 'State should not be empty' },
         trim: true
     },
+
     'hospitalAddress.pinCode': {
         exists: { errorMessage: 'Zip code is required' },
         notEmpty: { errorMessage: 'Zip code should not be empty' },
@@ -98,16 +108,17 @@ const doctorProfileValidationSchema = {
             }
         }
     },
+
     'hospitalAddress.country': {
         exists: { errorMessage: 'Country is required' },
         notEmpty: { errorMessage: 'Country should not be empty' },
         trim: true
     },
+
     yearsOfExperience: {
         exists: { errorMessage: 'Years of experience is required' },
         isInt: { errorMessage: 'Years of experience should be a valid number' }
     }
-    
 };
 
 module.exports = doctorProfileValidationSchema;

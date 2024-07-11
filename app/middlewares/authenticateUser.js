@@ -1,6 +1,5 @@
 const jwt=require('jsonwebtoken')
 
-//authenticate user
 const authenticateUser=async(req,res,next)=>{
     const token=req.headers['authorization']
     if(!token){

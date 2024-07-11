@@ -6,6 +6,7 @@ const userRegisterValidationSchema = {
         notEmpty: { errorMessage: 'Username should not be empty' },
         trim: true
     },
+
     email: {
         exists: { errorMessage: 'Email is required' },
         notEmpty: { errorMessage: 'Email should not be empty' },
@@ -22,12 +23,14 @@ const userRegisterValidationSchema = {
             }
         }
     },
+
     password: {
         exists: { errorMessage: 'Password is required' },
         notEmpty: { errorMessage: 'Password should not be empty' },
         isStrongPassword: { errorMessage: 'Password should be strong' },
         trim: true
     },
+    
     role: {
         exists: { errorMessage: 'Role is required' },
         notEmpty: { errorMessage: 'Role should not be empty' },

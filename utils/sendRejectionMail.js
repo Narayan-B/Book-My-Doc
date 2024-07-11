@@ -55,7 +55,6 @@ Congratulations! Your application has been verified successfully. Please proceed
 Best regards,
 Book My Doc`,
   };
-
   try {
     await transporter.sendMail(mailOptions);
     console.log('Verification success email sent successfully');
@@ -85,7 +84,6 @@ If you did not request a password reset, please ignore this email.
 Best regards,
 Book My Doc`,
   };
-
   try {
     await transporter.sendMail(mailOptions);
     console.log('OTP email sent successfully');
@@ -95,7 +93,6 @@ Book My Doc`,
     throw new Error('Failed to send OTP email');
   }
 };
-
 
 module.exports = {
   sendRejectionEmail,

@@ -1,6 +1,5 @@
 const {Schema,model}=require('mongoose')
 
-//schema
 const userSchema=new Schema({
     username:String,
     email:String,
@@ -17,7 +16,6 @@ const userSchema=new Schema({
     }
 },{timestamps:true})
 
-//model
 const User=model('User',userSchema)
 
 module.exports=User

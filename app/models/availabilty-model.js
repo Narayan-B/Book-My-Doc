@@ -8,6 +8,7 @@ const availabiltySchema=new Schema({
     consultationStartTime: String,
     consultationEndTime:String,
     consultationTimePerPatient:String,
+    consultationDays:[String]
 },{timestamps:true})
 
 const Availabilty=model('Availability',availabiltySchema)

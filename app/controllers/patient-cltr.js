@@ -22,6 +22,7 @@ patientCltr.createProfile = async (req, res) => {
     }
 }
 
+
 //get patientProfile
 patientCltr.getProfile=async(req,res)=>{
     try{
@@ -33,6 +34,7 @@ patientCltr.getProfile=async(req,res)=>{
     }
 }
 
+
 //update patientProfile
 patientCltr.updateProfile=async (req,res)=>{
     const errors = validationResult(req);
@@ -40,39 +42,34 @@ patientCltr.updateProfile=async (req,res)=>{
         return res.status(400).json({ errors: errors.array() });
     }
     const { firstName, lastName, mobile, address, pincode } = req.body;
-    const userId = req.user.id; // Assuming userId is extracted from JWT token or session
+    const userId = req.user.id; 
     try {
-        // Find the patient by userId and update the fields
         let patient = await Patient.findOne({ userId });
 
         if (!patient) {
             return res.status(400).json({ msg: 'No patient found' });
         }
-
-        // Update the patient document with the new fields
         patient.firstName = firstName;
         patient.lastName = lastName;
         patient.mobile = mobile;
         patient.address = address;
         patient.pincode = pincode;
 
-        // Handle profilePic update or fallback to existing profilePic
         if (req.file) {
-            patient.profilePic = req.file.path; // Update with new profilePic path
+            patient.profilePic = req.file.path;
         } else {
-            // If no new file uploaded, retain the existing profilePic
             if (!patient.profilePic) {
                 const existingPatient = await Patient.findOne({ userId });
                 patient.profilePic = existingPatient.profilePic;
             }
         }
-        // Save the updated patient document
         await patient.save();
-        res.json(patient); // Return the updated patient document
+        res.json(patient); 
     } catch (err) {
         console.error(err.message);
         res.status(500).json({ msg: 'Server error' });
     }
 };
+
 
 module.exports=patientCltr

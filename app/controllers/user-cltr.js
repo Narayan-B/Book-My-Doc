@@ -1,5 +1,4 @@
 const { validationResult } = require('express-validator');
-const { pick } = require('lodash');
 const bcryptjs = require('bcryptjs');
 const User = require('../models/user-model');
 const Profile=require('../models/doctor-model')
@@ -12,46 +11,40 @@ const userCtrl = {};
 userCtrl.registerUser = async (req, res) => {
     console.log(req.body.role)
     try {
-        // Check for validation errors
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
             return res.status(400).json({ errors: errors.array() });
         }
         const { username, email, password, role } = req.body;
-        // Hash the password
         const salt = await bcryptjs.genSalt();
         const hashedPassword = await bcryptjs.hash(password, salt);
-        // Create a new user instance
         const newUser = new User({
             username,
             email,
             password: hashedPassword,
             role
         });
-        // Save the user to the database
         await newUser.save();
-        res.status(201).json(newUser); // Return the newly created user
+        res.status(201).json(newUser); 
     } catch (error) {
         console.error('Error registering user:', error);
         res.status(500).json({ error: 'Internal server error' });
     }
 };
 
+
 //doctor registration
 userCtrl.registerDoctor = async (req, res) => {
     //console.log(req.file.path)
-    console.log(req.body)
+    //console.log(req.body)
     try {
-        // Check for validation errors
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
             return res.status(400).json({ errors: errors.array() });
         }
         const { username, email, password, role, registrationNo, speciality } = req.body;
-        // Hash the password
         const salt = await bcryptjs.genSalt();
         const hashedPassword = await bcryptjs.hash(password, salt);
-        // Create a new doctor instance
         const newDoctor = new User({
             username,
             email,
@@ -59,20 +52,19 @@ userCtrl.registerDoctor = async (req, res) => {
             role,
             registrationNo,
             speciality,
-           // Assuming Multer middleware is used to handle file upload
         });
         newDoctor.experienceCertificate=req.file.path
-        // Save the doctor to the database
         await newDoctor.save();
-        res.status(201).json(newDoctor); // Return the newly created doctor
+        res.status(201).json(newDoctor); 
     } catch (error) {
         console.error('Error registering doctor:', error);
         res.status(500).json({ error: 'Internal server error' });
     }
 };
+
+//check for email exists
 userCtrl.checkEmail = async (req, res) => {
     const { email } = req.query;
-    //const email=req.query.email
     try{
         const user=await User.findOne({email})
         if(user){
@@ -130,9 +122,7 @@ userCtrl.account=async(req,res)=>{
 //get all verified doctors
 userCtrl.allVerifiedDoctors = async (req, res) => {
     try {
-        // Find profiles and populate the userId field with corresponding user details
         const profiles = await Profile.find().populate('userId');
-        // Filter profiles based on the user's role and verification status
         const doctors = profiles.filter(profile => 
             profile.userId && 
             profile.userId.role === 'doctor' && 
@@ -141,13 +131,13 @@ userCtrl.allVerifiedDoctors = async (req, res) => {
         if (doctors.length === 0) {
             return res.status(404).json('No verified doctors found');
         }
-
         return res.json(doctors);
     } catch (err) {
         console.error(err);
         res.status(500).json({ error: 'Internal server error' });
     }
 };
+
 
 //checking admin exists or not
 userCtrl.adminExists=async(req,res)=>{
@@ -165,6 +155,7 @@ userCtrl.adminExists=async(req,res)=>{
     }
 }
 
+
 //get all doctors
 userCtrl.allDoctors=async(req,res)=>{
     try{
@@ -176,6 +167,7 @@ userCtrl.allDoctors=async(req,res)=>{
     }
 }
 
+
  //get all patients
 userCtrl.allPatients=async(req,res)=>{
     try{
@@ -186,6 +178,7 @@ userCtrl.allPatients=async(req,res)=>{
         return res.status(500).json({ error: 'Internal server error' });
     }
 }
+
  //forgot password
 userCtrl.forgotPassword=async (req, res) => {
     const errors = validationResult(req);

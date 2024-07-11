@@ -1,4 +1,3 @@
-//authorize user
 const authorizeUser=(permissions)=>{
     return (req,res,next)=>{
         if(permissions.includes(req.user.role)){
@@ -9,4 +8,5 @@ const authorizeUser=(permissions)=>{
           
     }
 }
+
 module.exports=authorizeUser

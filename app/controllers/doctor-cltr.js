@@ -16,15 +16,14 @@ doctorCtrl.createProfile = async (req, res) => {
         const doctor = new Doctor(body);
         doctor.userId = req.user.id;
         doctor.profilePic=req.file.path
-        // Save the doctor profile
         await doctor.save();
-
        return  res.json(doctor);
     } catch (err) {
         console.error(err);
         res.status(500).json({ message: 'Something went wrong' });
     }
 };
+
 
 //get doctorProfile
 doctorCtrl.getProfile=async(req,res)=>{
@@ -37,35 +36,25 @@ doctorCtrl.getProfile=async(req,res)=>{
     }
 }
 
+
 //update doctorProfile
 doctorCtrl.updateProfile = async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
         return res.status(400).json({ errors: errors.array() });
     }
-
     const body = req.body;
-
     try {
-        // Find the doctor by userId
         const userId = req.user.id;
         let doctor = await Doctor.findOne({ userId });
-
         if (!doctor) {
             return res.status(404).json({ message: 'Doctor not found' });
         }
-
-        // Check if a new profile picture is uploaded
         if (req.file) {
-            body.profilePic = req.file.path; // Assuming req.file.path contains the path to the uploaded profile picture
+            body.profilePic = req.file.path; 
         }
-
-        // Update doctor's profile information
         doctor.set(body);
-
-        // Save the updated doctor document
         doctor = await doctor.save();
-
         res.json(doctor);
     } catch (err) {
         console.error(err);
@@ -73,13 +62,12 @@ doctorCtrl.updateProfile = async (req, res) => {
     }
 };
 
+
  //verfication of the docctor
 doctorCtrl.verifyDoctor = async (req, res) => {
     const { id } = req.params;
     const { action } = req.body; // "verify" or "reject"
-  
     try {
-      // Find the doctor by id
       const doctor = await User.findOneAndUpdate(
         { _id: id, role: 'doctor' },
         { isVerified: action === 'verify' },
@@ -88,10 +76,8 @@ doctorCtrl.verifyDoctor = async (req, res) => {
       if (!doctor) {
         return res.status(404).json({ message: 'Doctor not found' });
       }
-  
       // Extract email and username from the user
       const { email, username } = doctor;
-  
       // Send appropriate email based on the action
       if (action === 'verify') {
         //console.log(`Sending verification success email to: ${email}, ${username}`);
@@ -109,6 +95,7 @@ doctorCtrl.verifyDoctor = async (req, res) => {
       res.status(500).json({ message: 'Something went wrong' });
     }
   };
+
 
 //get single doctor
 doctorCtrl.singleDoctor=async(req,res)=>{

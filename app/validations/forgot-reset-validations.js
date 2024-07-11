@@ -19,12 +19,14 @@ const otpValidationSchema=({
         },
         isNumeric:'OTP should be a number'
     },
+
     newPassword: {
         exists: { errorMessage: 'Password is required' },
         notEmpty: { errorMessage: 'Password should not be empty' },
         isStrongPassword: { errorMessage: 'Password should be strong' },
         trim: true
     },
+
     email:{
         exists:{errorMessage:"email is required"},
         notEmpty:{errorMessage:"email should not be empty"},
@@ -32,6 +34,7 @@ const otpValidationSchema=({
         isEmail:{errorMessage:'Email should be in valid format'},
         normalizeEmail:true
     }
+    
 })
 
 module.exports={forgotEmailValidationSchema,otpValidationSchema}

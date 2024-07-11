@@ -1,17 +1,20 @@
-
 const Patient = require('../models/patient-model');
 const Doctor=require('../models/doctor-model')
+
 const patientProfileValidationSchema = {
+
     firstName: {
         exists: { errorMessage: 'First name is required' },
         notEmpty: { errorMessage: 'First name should not be empty' },
         trim: true
     },
+
     lastName: {
         exists: { errorMessage: 'Last name is required' },
         notEmpty: { errorMessage: 'Last name should not be empty' },
         trim: true
     },
+
     mobile: {
         exists: { errorMessage: 'mobile number is required' },
         notEmpty: { errorMessage: 'mobile number should not be empty' },
@@ -27,6 +30,7 @@ const patientProfileValidationSchema = {
             }
         }
     },
+
     profilePic:{
         custom: {
             options: (value, { req }) => {
@@ -41,11 +45,13 @@ const patientProfileValidationSchema = {
             }
         }
     },
+
     address:{
         exists: { errorMessage: 'address is required' },
         notEmpty: { errorMessage: 'address should not be empty' },
         trim:true
     },
+
     pincode:{
         exists: { errorMessage: 'pincode is required' },
         notEmpty: { errorMessage: 'pincode should not be empty' },
@@ -62,4 +68,5 @@ const patientProfileValidationSchema = {
             }
         }
     };
+    
 module.exports = patientProfileValidationSchema;
